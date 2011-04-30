@@ -10,12 +10,16 @@ package net.noiseinstitute.ld20 {
         private static const HEIGHT:int = 15;
 
         private static const COLLISION_ALLOWANCE:Number = 4;
-        private static const KICK_UP_IN_THE_AIR_AMOUNT:Number = 4;
+        private static const KICK_UP_IN_THE_AIR_MULTIPLIER:Number = 0.8;
 
         private static const SAFE_SPEED:Number = 2;
         private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.8;
 
         private var _thingUponWhichIRest:Collidable;
+
+        public override function get resting():Boolean {
+            return _thingUponWhichIRest != null;
+        }
 
         public function Thing (targetX:Number, targetY:Number) {
             x = targetX;
@@ -31,6 +35,27 @@ package net.noiseinstitute.ld20 {
         }
 
         public override function update():void {
+            if (_thingUponWhichIRest != null) {
+                if (!_thingUponWhichIRest.resting) {
+                    _thingUponWhichIRest = null;
+                } else if (right < _thingUponWhichIRest.left) {
+                    if (_thingUponWhichIRest.vx < 0) {
+                        _vx += _thingUponWhichIRest.vx;
+                    }
+                    _thingUponWhichIRest = null
+                } else if (left > _thingUponWhichIRest.right) {
+                    if (_thingUponWhichIRest.vx > 0) {
+                        _vx += _thingUponWhichIRest.vx;
+                    }
+                    _thingUponWhichIRest = null;
+                } else if (Math.abs(_thingUponWhichIRest.vx) <= SAFE_SPEED) {
+                    _vx = _thingUponWhichIRest.vx;
+                } else {
+                    var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
+                    _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
+                }
+            }
+
             if (_thingUponWhichIRest == null) {
                 _vy += GRAVITY;
                 if (_vy > MAX_SPEED) {
@@ -44,7 +69,7 @@ package net.noiseinstitute.ld20 {
                         y = collider.y - collider.height;
                         _vy = 0;
                     } else {
-                        _vy -= KICK_UP_IN_THE_AIR_AMOUNT;
+                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
                         if (x < collider.x) {
                             x = collider.left - (right - x);
                             if (collider.vx < 0) {
@@ -57,13 +82,6 @@ package net.noiseinstitute.ld20 {
                             }
                         }
                     }
-                }
-            } else {
-                if (Math.abs(_thingUponWhichIRest.vx) <= SAFE_SPEED) {
-                    _vx = _thingUponWhichIRest.vx;
-                } else {
-                    var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
-                    _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
                 }
             }
 

@@ -19,6 +19,10 @@ package net.noiseinstitute.ld20 {
             return _vy;
         }
 
+        public function get resting():Boolean {
+            return true;
+        }
+
         public override function update():void {
             x += _vx;
             y += _vy;
