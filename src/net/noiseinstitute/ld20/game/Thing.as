@@ -11,7 +11,7 @@ package net.noiseinstitute.ld20.game {
         private static const HEIGHT:int = 15;
 
         private static const COLLISION_ALLOWANCE:Number = 360 / Main.FPS;
-        private static const KICK_UP_IN_THE_AIR_MULTIPLIER:Number = 0.8;
+        private static const KICK_UP_IN_THE_AIR_COEFFICIENT:Number = 0.8;
 
         private static const SAFE_SPEED:Number = 75 / Main.FPS;
         private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.7;
@@ -81,7 +81,7 @@ package net.noiseinstitute.ld20.game {
                                 if (collider.vx < 0) {
                                     _vx += collider.vx;
                                     if (collider instanceof Player) {
-                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
+                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_COEFFICIENT;
                                     }
                                 }
                             } else if (x > collider.x) {
@@ -89,7 +89,7 @@ package net.noiseinstitute.ld20.game {
                                 if (collider.vx > 0) {
                                     _vx += collider.vx;
                                     if (collider instanceof Player) {
-                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
+                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_COEFFICIENT;
                                     }
                                 }
                             }
