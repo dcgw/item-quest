@@ -62,25 +62,31 @@ package net.noiseinstitute.ld20 {
                     _vy = MAX_SPEED;
                 }
 
-                var collider:Collidable = collide(Collidable.TYPE, x, y) as Collidable;
-                if (collider != null && collider.resting) {
-                    if (bottom < collider.top + COLLISION_ALLOWANCE) {
-                        _thingUponWhichIRest = collider;
-                        y = collider.y - collider.height;
-                        _vy = 0;
-                    } else {
-                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
-                        if (x < collider.x) {
-                            x = collider.left - (right - x);
-                            if (collider.vx < 0) {
-                                _vx += collider.vx;
+                var colliders:Array = [];
+                collideInto(Collidable.TYPE, x, y, colliders);
+                for each (var collider:Collidable in colliders) {
+                    if (collider != null && collider.resting) {
+                        if (bottom < collider.top + COLLISION_ALLOWANCE) {
+                            _thingUponWhichIRest = collider;
+                            y = collider.y - collider.height;
+                            _vy = 0;
+                        } else {
+                            if (collider instanceof Player) {
+                                _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
                             }
-                        } else if (x > collider.x) {
-                            x = collider.right + (x - left);
-                            if (collider.vx > 0) {
-                                _vx += collider.vx;
+                            if (x < collider.x) {
+                                x = collider.left - (right - x);
+                                if (collider.vx < 0) {
+                                    _vx += collider.vx;
+                                }
+                            } else if (x > collider.x) {
+                                x = collider.right + (x - left);
+                                if (collider.vx > 0) {
+                                    _vx += collider.vx;
+                                }
                             }
                         }
+                        break;
                     }
                 }
             }
