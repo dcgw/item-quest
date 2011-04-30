@@ -9,11 +9,11 @@ package net.noiseinstitute.ld20 {
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 15;
 
-        private static const COLLISION_ALLOWANCE:Number = 4;
+        private static const COLLISION_ALLOWANCE:Number = 6;
         private static const KICK_UP_IN_THE_AIR_MULTIPLIER:Number = 0.8;
 
-        private static const SAFE_SPEED:Number = 2;
-        private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.8;
+        private static const SAFE_SPEED:Number = 1;
+        private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.7;
 
         private var _thingUponWhichIRest:Collidable;
 
