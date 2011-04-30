@@ -1,6 +1,5 @@
 package net.noiseinstitute.ld20 {
     import net.flashpunk.Entity;
-    import net.flashpunk.graphics.Image;
     import net.flashpunk.graphics.Spritemap;
     import net.flashpunk.utils.Input;
 
