@@ -14,11 +14,18 @@ package net.noiseinstitute.ld20 {
 
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
-        private var _spritemap:Spritemap = new Spritemap(PlayerImage, WIDTH, HEIGHT);
+
+        public static const TYPE:String = "player";
+
+        private var _spritemap:Spritemap;
 
         private var _velocity:Number = 0;
 
         public function Player () {
+            width = WIDTH;
+            height = HEIGHT;
+
+            _spritemap = new Spritemap(PlayerImage, WIDTH, HEIGHT);
             _spritemap.add("walk-right", [0, 1, 2, 3], 0.25);
 
             _spritemap.x = -Math.ceil(WIDTH/2);
@@ -28,6 +35,7 @@ package net.noiseinstitute.ld20 {
 
             graphic = _spritemap;
 
+            type = TYPE;
             mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
 
             x = Main.WIDTH/2;
