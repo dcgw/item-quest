@@ -7,9 +7,9 @@ package net.noiseinstitute.ld20 {
         [Embed(source="Player.png")]
         private static const PlayerImage:Class;
 
-        private static const ACCELERATION:Number = 0.2;
-        private static const DECELERATION:Number = 0.3;
-        private static const MAX_SPEED:Number = 6;
+        private static const ACCELERATION:Number = 720 / Main.FPS / Main.FPS;
+        private static const DECELERATION:Number = 1080 / Main.FPS / Main.FPS;
+        private static const MAX_SPEED:Number = 360 / Main.FPS;
 
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
@@ -21,7 +21,7 @@ package net.noiseinstitute.ld20 {
             height = HEIGHT;
 
             _spritemap = new Spritemap(PlayerImage, WIDTH, HEIGHT);
-            _spritemap.add("walk-right", [0, 1, 2, 3], 0.25);
+            _spritemap.add("walk-right", [0, 1, 2, 3], 15 / Main.FPS);
 
             _spritemap.x = -Math.ceil(WIDTH/2);
             _spritemap.y = -HEIGHT;

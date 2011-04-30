@@ -8,9 +8,10 @@ package net.noiseinstitute.ld20 {
     public class Main extends Engine {
         public static const WIDTH:uint = 240;
         public static const HEIGHT:uint = 320;
+        public static const FPS:uint = 240;
 
         public function Main () {
-            super(WIDTH, HEIGHT, 60, true);
+            super(WIDTH, HEIGHT, FPS, true);
 
             Input.define("left", Key.LEFT);
             Input.define("right", Key.RIGHT);

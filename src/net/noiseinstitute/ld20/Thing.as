@@ -3,16 +3,16 @@ package net.noiseinstitute.ld20 {
     import net.flashpunk.masks.Hitbox;
 
     public class Thing extends Collidable {
-        private static const GRAVITY:Number = 0.05;
-        private static const MAX_SPEED:Number = 5;
+        private static const GRAVITY:Number = 180 / Main.FPS / Main.FPS;
+        private static const MAX_SPEED:Number = 300 / Main.FPS;
 
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 15;
 
-        private static const COLLISION_ALLOWANCE:Number = 6;
+        private static const COLLISION_ALLOWANCE:Number = 360 / Main.FPS;
         private static const KICK_UP_IN_THE_AIR_MULTIPLIER:Number = 0.8;
 
-        private static const SAFE_SPEED:Number = 1;
+        private static const SAFE_SPEED:Number = 60 / Main.FPS;
         private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.7;
 
         private var _thingUponWhichIRest:Collidable;

@@ -4,7 +4,7 @@ package net.noiseinstitute.ld20 {
     public class OldMan extends Entity {
         private static const VARIANCE:int = 60;
         private static const BUILDUP:int = 60;
-        private static const INTERVAL:int = 120;
+        private static const INTERVAL:int = 2 * Main.FPS;
 
         private var tick:uint = 0;
 
