@@ -1,6 +1,7 @@
 package net.noiseinstitute.ld20 {
     import net.flashpunk.Entity;
     import net.flashpunk.graphics.Spritemap;
+    import net.flashpunk.masks.Hitbox;
     import net.flashpunk.utils.Input;
 
     public class Player extends Entity {
@@ -18,15 +19,16 @@ package net.noiseinstitute.ld20 {
         private var _velocity:Number = 0;
 
         public function Player () {
-            _spritemap.add("stand-right", [0]);
             _spritemap.add("walk-right", [0, 1, 2, 3], 0.25);
 
-            _spritemap.x = -8;
-            _spritemap.y = -25;
+            _spritemap.x = -Math.ceil(WIDTH/2);
+            _spritemap.y = -HEIGHT;
 
             _spritemap.play("walk-right");
 
-            this.graphic = _spritemap;
+            graphic = _spritemap;
+
+            mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
 
             x = Main.WIDTH/2;
             y = Main.HEIGHT - 31;

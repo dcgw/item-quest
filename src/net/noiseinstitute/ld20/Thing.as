@@ -1,10 +1,14 @@
 package net.noiseinstitute.ld20 {
     import net.flashpunk.Entity;
     import net.flashpunk.graphics.Image;
+    import net.flashpunk.masks.Hitbox;
 
     public class Thing extends Entity {
         private static const GRAVITY:Number = 0.05;
         private static const MAX_SPEED:Number = 5;
+
+        private static const WIDTH:int = 15;
+        private static const HEIGHT:int = 15;
 
         private var _vx:Number = 0;
         private var _vy:Number = 0;
@@ -13,9 +17,11 @@ package net.noiseinstitute.ld20 {
             x = targetX;
             y = targetY;
 
-            graphic = Image.createRect(15, 15, 0x000000);
-            graphic.x = -8;
-            graphic.y = -15;
+            graphic = Image.createRect(WIDTH, HEIGHT, 0x000000);
+            graphic.x = -Math.ceil(WIDTH/2);
+            graphic.y = -HEIGHT;
+
+            mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
         }
 
         public override function update():void {
