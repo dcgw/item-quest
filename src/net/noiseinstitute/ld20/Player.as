@@ -8,10 +8,12 @@ package net.noiseinstitute.ld20 {
         private static const PlayerImage:Class;
 
         private static const ACCELERATION:Number = 0.2;
-        private static const DECELERATION:Number = 0.4;
-        private static const MAX_SPEED:Number = 4;
+        private static const DECELERATION:Number = 0.3;
+        private static const MAX_SPEED:Number = 6;
 
-        private var _spritemap:Spritemap = new Spritemap(PlayerImage, 15, 25);
+        private static const WIDTH:int = 15;
+        private static const HEIGHT:int = 25;
+        private var _spritemap:Spritemap = new Spritemap(PlayerImage, WIDTH, HEIGHT);
 
         private var _velocity:Number = 0;
 
@@ -26,8 +28,8 @@ package net.noiseinstitute.ld20 {
 
             this.graphic = _spritemap;
 
-            x = 160;
-            y = 240 - 31;
+            x = Main.WIDTH/2;
+            y = Main.HEIGHT - 31;
         }
 
         public override function update():void {
