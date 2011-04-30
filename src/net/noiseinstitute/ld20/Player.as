@@ -22,7 +22,7 @@ package net.noiseinstitute.ld20 {
             this.graphic = _spritemap;
 
             x = 160;
-            y = 240;
+            y = 240 - 31;
         }
 
         public override function update():void {
