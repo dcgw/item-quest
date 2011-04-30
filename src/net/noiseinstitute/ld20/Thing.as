@@ -49,7 +49,11 @@ package net.noiseinstitute.ld20 {
                     }
                     _thingUponWhichIRest = null;
                 } else if (Math.abs(_thingUponWhichIRest.vx) <= SAFE_SPEED) {
-                    _vx = _thingUponWhichIRest.vx;
+                    if (Math.abs(_vx) <= SAFE_SPEED) {
+                        _vx = _thingUponWhichIRest.vx;
+                    } else {
+                        _vx = _thingUponWhichIRest.vx * FRACTION_ABOVE_SAFE_SPEED + _vx * (1-FRACTION_ABOVE_SAFE_SPEED);
+                    }
                 } else {
                     var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
                     _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
