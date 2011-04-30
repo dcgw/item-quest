@@ -3,6 +3,7 @@ package net.noiseinstitute.ld20 {
     import net.flashpunk.FP;
     import net.flashpunk.utils.Input;
     import net.flashpunk.utils.Key;
+    import net.noiseinstitute.ld20.intro.IntroWorld;
 
     [SWF(width="480", height="640", backgroundColor="#000000", frameRate="60")]
     public class Main extends Engine {
@@ -17,7 +18,7 @@ package net.noiseinstitute.ld20 {
             Input.define("right", Key.RIGHT);
 
             FP.screen.scale = 2;
-            FP.world = new GameWorld();
+            FP.world = new IntroWorld();
         }
     }
 }

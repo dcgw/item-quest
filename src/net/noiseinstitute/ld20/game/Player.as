@@ -1,11 +1,12 @@
-package net.noiseinstitute.ld20 {
+package net.noiseinstitute.ld20.game {
+    import net.noiseinstitute.ld20.Main;
     import net.flashpunk.graphics.Spritemap;
     import net.flashpunk.masks.Hitbox;
     import net.flashpunk.utils.Input;
 
     public class Player extends Collidable {
         [Embed(source="Player.png")]
-        private static const PlayerImage:Class;
+        private static const PlayerSpritemap:Class;
 
         private static const ACCELERATION:Number = 720 / Main.FPS / Main.FPS;
         private static const DECELERATION:Number = 1080 / Main.FPS / Main.FPS;
@@ -20,7 +21,7 @@ package net.noiseinstitute.ld20 {
             width = WIDTH;
             height = HEIGHT;
 
-            _spritemap = new Spritemap(PlayerImage, WIDTH, HEIGHT);
+            _spritemap = new Spritemap(PlayerSpritemap, WIDTH, HEIGHT);
             _spritemap.add("walk-right", [0, 1, 2, 3], 15 / Main.FPS);
 
             _spritemap.x = -Math.ceil(WIDTH/2);

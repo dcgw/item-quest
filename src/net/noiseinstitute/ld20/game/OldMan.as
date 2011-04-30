@@ -1,4 +1,5 @@
-package net.noiseinstitute.ld20 {
+package net.noiseinstitute.ld20.game {
+    import net.noiseinstitute.ld20.Main;
     import net.flashpunk.Entity;
 
     public class OldMan extends Entity {

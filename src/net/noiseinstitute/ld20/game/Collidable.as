@@ -1,4 +1,4 @@
-package net.noiseinstitute.ld20 {
+package net.noiseinstitute.ld20.game {
     import net.flashpunk.Entity;
 
     public class Collidable extends net.flashpunk.Entity {
