@@ -1,10 +1,9 @@
 package net.noiseinstitute.ld20 {
-    import net.flashpunk.Entity;
     import net.flashpunk.graphics.Spritemap;
     import net.flashpunk.masks.Hitbox;
     import net.flashpunk.utils.Input;
 
-    public class Player extends Entity {
+    public class Player extends Collidable {
         [Embed(source="Player.png")]
         private static const PlayerImage:Class;
 
@@ -15,11 +14,7 @@ package net.noiseinstitute.ld20 {
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
 
-        public static const TYPE:String = "player";
-
         private var _spritemap:Spritemap;
-
-        private var _velocity:Number = 0;
 
         public function Player () {
             width = WIDTH;
@@ -35,7 +30,6 @@ package net.noiseinstitute.ld20 {
 
             graphic = _spritemap;
 
-            type = TYPE;
             mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
 
             x = Main.WIDTH/2;
@@ -46,28 +40,26 @@ package net.noiseinstitute.ld20 {
             var left:Boolean = Input.check(Input.keys("left"));
             var right:Boolean = Input.check(Input.keys("right"));
             if (right && !left) {
-                _velocity += ACCELERATION;
+                _vx += ACCELERATION;
             } else if (left && !right) {
-                _velocity -= ACCELERATION;
-            } else if (_velocity > 0) {
-                _velocity -= DECELERATION;
-                if (_velocity < 0) {
-                     _velocity = 0;
+                _vx -= ACCELERATION;
+            } else if (_vx > 0) {
+                _vx -= DECELERATION;
+                if (_vx < 0) {
+                     _vx = 0;
                 }
-            } else if (_velocity < 0) {
-                _velocity += DECELERATION;
-                if (_velocity > 0) {
-                    _velocity = 0;
+            } else if (_vx < 0) {
+                _vx += DECELERATION;
+                if (_vx > 0) {
+                    _vx = 0;
                 }
             }
 
-            if (_velocity > MAX_SPEED) {
-                _velocity = MAX_SPEED;
-            } else if (_velocity < -MAX_SPEED) {
-                _velocity = -MAX_SPEED;
+            if (_vx > MAX_SPEED) {
+                _vx = MAX_SPEED;
+            } else if (_vx < -MAX_SPEED) {
+                _vx = -MAX_SPEED;
             }
-
-            x += _velocity;
 
             super.update();
         }
