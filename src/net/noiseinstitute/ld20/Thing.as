@@ -9,9 +9,11 @@ package net.noiseinstitute.ld20 {
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 15;
 
-        private static const ALLOWANCE:Number = 4;
-
+        private static const COLLISION_ALLOWANCE:Number = 4;
         private static const KICK_UP_IN_THE_AIR_AMOUNT:Number = 4;
+
+        private static const SAFE_SPEED:Number = 2;
+        private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.8;
 
         private var _thingUponWhichIRest:Collidable;
 
@@ -37,7 +39,7 @@ package net.noiseinstitute.ld20 {
 
                 var collider:Collidable = collide(Collidable.TYPE, x, y) as Collidable;
                 if (collider != null) {
-                    if (bottom < collider.top + ALLOWANCE) {
+                    if (bottom < collider.top + COLLISION_ALLOWANCE) {
                         _thingUponWhichIRest = collider;
                         y = collider.y - collider.height;
                         _vy = 0;
@@ -55,6 +57,13 @@ package net.noiseinstitute.ld20 {
                             }
                         }
                     }
+                }
+            } else {
+                if (Math.abs(_thingUponWhichIRest.vx) <= SAFE_SPEED) {
+                    _vx = _thingUponWhichIRest.vx;
+                } else {
+                    var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
+                    _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
                 }
             }
 
