@@ -71,18 +71,21 @@ package net.noiseinstitute.ld20 {
                             y = collider.y - collider.height;
                             _vy = 0;
                         } else {
-                            if (collider instanceof Player) {
-                                _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
-                            }
                             if (x < collider.x) {
                                 x = collider.left - (right - x);
                                 if (collider.vx < 0) {
                                     _vx += collider.vx;
+                                    if (collider instanceof Player) {
+                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
+                                    }
                                 }
                             } else if (x > collider.x) {
                                 x = collider.right + (x - left);
                                 if (collider.vx > 0) {
                                     _vx += collider.vx;
+                                    if (collider instanceof Player) {
+                                        _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_MULTIPLIER;
+                                    }
                                 }
                             }
                         }
