@@ -38,7 +38,6 @@ package net.noiseinstitute.ld20.game {
             for (var i:int=0; i<SPARKLE_TYPES.length; ++i) {
                 _emitter.newType(SPARKLE_TYPES[i], [i, i+3, i+6, i+9, i+12, i+15, i+18, i+21, i+24]);
                 _emitter.setMotion(SPARKLE_TYPES[i], 30, 16, 1/3*Main.FPS, 120);
-                _emitter.setAlpha(SPARKLE_TYPES[i]);
             }
 
             graphic = _emitter;
