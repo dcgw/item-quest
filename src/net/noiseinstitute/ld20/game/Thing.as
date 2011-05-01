@@ -1,8 +1,7 @@
 package net.noiseinstitute.ld20.game {
     import net.flashpunk.graphics.Spritemap;
-    import net.noiseinstitute.ld20.Main;
-    import net.flashpunk.graphics.Image;
     import net.flashpunk.masks.Hitbox;
+    import net.noiseinstitute.ld20.Main;
 
     public class Thing extends Collidable {
         [Embed(source="Thing.png")]
@@ -13,6 +12,11 @@ package net.noiseinstitute.ld20.game {
 
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 15;
+
+        private static const ANIMATIONS:Vector.<String> = Vector.<String>([
+                "grail", "dentures", "torch", "heart", "banana", "book",
+                "gauntlets", "diamond"
+        ]);
 
         private static const COLLISION_ALLOWANCE:Number = 360 / Main.FPS;
         private static const KICK_UP_IN_THE_AIR_COEFFICIENT:Number = 0.8;
@@ -29,9 +33,13 @@ package net.noiseinstitute.ld20.game {
         }
 
         public function Thing (targetX:Number, targetY:Number) {
-            var spritemap:Spritemap = new Spritemap(ThingSpritemap);
-            spritemap.add("grail", [0], 0, false);
-            spritemap.play("grail");
+            var spritemap:Spritemap = new Spritemap(ThingSpritemap, WIDTH, HEIGHT);
+
+            for (var i:uint=0; i<ANIMATIONS.length; ++i) {
+                spritemap.add(ANIMATIONS[i], [i], 0, false);
+            }
+
+            spritemap.play(ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]);
             graphic = spritemap;
 
             x = targetX;
@@ -39,7 +47,7 @@ package net.noiseinstitute.ld20.game {
             width = WIDTH;
             height = HEIGHT;
 
-            mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
+            mask = new Hitbox(WIDTH - 2, HEIGHT, -Math.ceil(WIDTH/2) + 1, -HEIGHT);
         }
 
         public override function update():void {
