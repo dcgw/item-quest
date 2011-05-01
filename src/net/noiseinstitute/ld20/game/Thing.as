@@ -129,6 +129,8 @@ package net.noiseinstitute.ld20.game {
                         }
                     }
                 }
+
+                _particles.sparkle(x, y, WIDTH);
             }
 
             super.update();
