@@ -13,6 +13,7 @@ package net.noiseinstitute.ld20.intro {
             add(new Ground);
             add(new Player);
             add(new OldMan);
+            add(new Dialogue);
         }
 
         public override function update():void {
