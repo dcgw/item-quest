@@ -13,19 +13,25 @@ package net.noiseinstitute.ld20.intro {
         private static const HEIGHT:Number = Main.HEIGHT;
 
         private static const APPEND_INTERVAL:Number = 1/30 * Main.FPS;
+        private static const REMAIN_TIME_PER_LETTER:Number = 1/20 * Main.FPS;
+
+        private var _callback:Function;
 
         private var _text:Text;
-        private var _lines:Vector.<String>;
 
+        private var _lines:Vector.<String>;
         private var _frame:int = 0;
         private var _lastAppendFrame:int = 0;
 
-        private var _lastBreakPoint:int = 0;
+        private var _completeLineFrame:int = 0;
 
-        private var _line:int = 1;
+        private var _lastBreakPoint:int = 0;
+        private var _line:int = 0;
         private var _letter:int = 0;
 
-        public function Dialogue () {
+        public function Dialogue (callback:Function) {
+            _callback = callback;
+
             _lines = Vector.<String>([
                 "Old Man: " +
                         SelectWord(Vector.<String>(["Wait", "Hark", "Give heed"])) +
@@ -85,10 +91,11 @@ package net.noiseinstitute.ld20.intro {
 
         public override function update():void {
             ++_frame;
-            while (_frame - APPEND_INTERVAL > _lastAppendFrame) {
-                if (_line < _lines.length) {
-                    if (_letter < _lines[_line].length) {
-                        var ch:String = _lines[_line].charAt(_letter);
+            if (_line < _lines.length) {
+                var line:String = _lines[_line];
+                while (_frame - APPEND_INTERVAL > _lastAppendFrame) {
+                    if (_letter < line.length) {
+                        var ch:String = line.charAt(_letter);
                         _text.text += ch;
                         if (_text.width > WIDTH) {
                             _text.text = _text.text.substr(0, _lastBreakPoint) + "\n" +
@@ -97,11 +104,25 @@ package net.noiseinstitute.ld20.intro {
                         if (ch == " " || ch == "-") {
                             _lastBreakPoint = _letter;
                         }
-                        _letter++;
+                        if (++_letter == line.length) {
+                            _completeLineFrame = _frame;
+                        }
+                    }
+                    _lastAppendFrame += APPEND_INTERVAL;
+                }
+
+                if (_letter >= line.length) {
+                    if (_frame - REMAIN_TIME_PER_LETTER * line.length > _completeLineFrame) {
+                        _text.text = "";
+                        _letter = 0;
+                        _lastBreakPoint = 0;
+                        if (++_line == _lines.length && _callback != null) {
+                            _callback();
+                        }
                     }
                 }
-                _lastAppendFrame += APPEND_INTERVAL;
             }
+
             super.update();
         }
     }

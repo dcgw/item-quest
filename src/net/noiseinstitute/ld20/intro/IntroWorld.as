@@ -2,6 +2,7 @@ package net.noiseinstitute.ld20.intro {
     import net.flashpunk.FP;
     import net.flashpunk.World;
     import net.noiseinstitute.ld20.Main;
+    import net.noiseinstitute.ld20.game.GameWorld;
 
     public class IntroWorld extends World {
         public static const SCROLL_BACK:Number = 48;
@@ -13,7 +14,7 @@ package net.noiseinstitute.ld20.intro {
             add(new Ground);
             add(new Player);
             add(new OldMan);
-            add(new Dialogue);
+            add(new Dialogue(onDialogueComplete));
         }
 
         public override function update():void {
@@ -22,6 +23,10 @@ package net.noiseinstitute.ld20.intro {
             }
 
             super.update();
+        }
+
+        private function onDialogueComplete():void {
+            FP.world = new GameWorld;
         }
     }
 }
