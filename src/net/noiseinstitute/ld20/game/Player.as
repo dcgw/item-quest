@@ -22,6 +22,8 @@ package net.noiseinstitute.ld20.game {
 
         private var _frame:uint = 0;
 
+        private var _alive:Boolean = true;
+
         public function Player () {
             width = WIDTH;
             height = HEIGHT;
@@ -45,6 +47,11 @@ package net.noiseinstitute.ld20.game {
         }
 
         public override function update():void {
+            if (collide(Fire.TYPE, x, y)) {
+                die();
+                return;
+            }
+
             var left:Boolean = Input.check(Input.keys("left"));
             var right:Boolean = Input.check(Input.keys("right"));
             if (right && !left) {
@@ -73,6 +80,15 @@ package net.noiseinstitute.ld20.game {
             _bobPosition = Math.PI + Math.PI + _frame * BOB_INCREMENT;
 
             super.update();
+        }
+
+        public override function get resting():Boolean {
+            return _alive;
+        }
+
+        private function die ():void {
+            _alive = false;
+            world.remove(this);
         }
     }
 }

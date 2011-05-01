@@ -1,7 +1,6 @@
 package net.noiseinstitute.ld20.game {
     import net.flashpunk.Entity;
     import net.flashpunk.graphics.Spritemap;
-    import net.flashpunk.masks.Pixelmask;
     import net.noiseinstitute.ld20.Main;
 
     public class Fire extends Entity {
@@ -35,6 +34,9 @@ package net.noiseinstitute.ld20.game {
             spritemap.y = -HEIGHT;
 
             graphic = spritemap;
+
+            type = TYPE;
+            setHitbox(1, 1, spritemap.x, spritemap.y);
 
             spritemap.play("fire");
         }
