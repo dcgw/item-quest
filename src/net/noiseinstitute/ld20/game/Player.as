@@ -15,7 +15,11 @@ package net.noiseinstitute.ld20.game {
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
 
+        private static const BOB_INCREMENT:Number = 15/4 * (Math.PI*2) / Main.FPS;
+
         private var _spritemap:Spritemap;
+
+        private var _frame:uint = 0;
 
         public function Player () {
             width = WIDTH;
@@ -31,10 +35,12 @@ package net.noiseinstitute.ld20.game {
 
             graphic = _spritemap;
 
-            mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
+            mask = new Hitbox(WIDTH, HEIGHT-1, -Math.ceil(WIDTH/2), -HEIGHT);
 
             x = Main.WIDTH/2;
             y = Main.HEIGHT - 31;
+
+            _bobPosition = Math.PI;
         }
 
         public override function update():void {
@@ -61,6 +67,9 @@ package net.noiseinstitute.ld20.game {
             } else if (_vx < -MAX_SPEED) {
                 _vx = -MAX_SPEED;
             }
+
+            ++_frame;
+            _bobPosition = _frame * BOB_INCREMENT;
 
             super.update();
         }

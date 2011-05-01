@@ -6,6 +6,7 @@ package net.noiseinstitute.ld20.game {
 
         protected var _vx:Number = 0;
         protected var _vy:Number = 0;
+        protected var _bobPosition:Number = 0;
 
         public function Collidable() {
             type = TYPE;
@@ -17,6 +18,10 @@ package net.noiseinstitute.ld20.game {
 
         public function get vy():Number {
             return _vy;
+        }
+
+        public function get bobPosition():Number {
+            return _bobPosition;
         }
 
         public function get resting():Boolean {

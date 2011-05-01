@@ -16,6 +16,8 @@ package net.noiseinstitute.ld20.game {
         private static const SAFE_SPEED:Number = 75 / Main.FPS;
         private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.7;
 
+        private static const BOB_POSITION_OFFSET:Number = Math.PI/4;
+
         private var _thingUponWhichIRest:Collidable;
 
         public override function get resting():Boolean {
@@ -59,6 +61,13 @@ package net.noiseinstitute.ld20.game {
                     var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
                     _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
                 }
+            }
+
+            if (_thingUponWhichIRest != null) {
+                _bobPosition = _thingUponWhichIRest.bobPosition + BOB_POSITION_OFFSET;
+                graphic.y = -HEIGHT + Math.sin(_bobPosition) * 1.2;
+            } else {
+                graphic.y = -HEIGHT;
             }
 
             if (_thingUponWhichIRest == null) {
