@@ -1,9 +1,13 @@
 package net.noiseinstitute.ld20.game {
+    import net.flashpunk.graphics.Spritemap;
     import net.noiseinstitute.ld20.Main;
     import net.flashpunk.graphics.Image;
     import net.flashpunk.masks.Hitbox;
 
     public class Thing extends Collidable {
+        [Embed(source="Thing.png")]
+        private static const ThingSpritemap:Class;
+
         private static const GRAVITY:Number = 180 / Main.FPS / Main.FPS;
         private static const MAX_SPEED:Number = 300 / Main.FPS;
 
@@ -25,14 +29,15 @@ package net.noiseinstitute.ld20.game {
         }
 
         public function Thing (targetX:Number, targetY:Number) {
+            var spritemap:Spritemap = new Spritemap(ThingSpritemap);
+            spritemap.add("grail", [0], 0, false);
+            spritemap.play("grail");
+            graphic = spritemap;
+
             x = targetX;
             y = targetY;
             width = WIDTH;
             height = HEIGHT;
-
-            graphic = Image.createRect(WIDTH, HEIGHT, 0x000000);
-            graphic.x = -Math.ceil(WIDTH/2);
-            graphic.y = -HEIGHT;
 
             mask = new Hitbox(WIDTH, HEIGHT, -Math.ceil(WIDTH/2), -HEIGHT);
         }
