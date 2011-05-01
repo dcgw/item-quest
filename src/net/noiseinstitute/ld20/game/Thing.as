@@ -10,7 +10,7 @@ package net.noiseinstitute.ld20.game {
         private static const GRAVITY:Number = 180 / Main.FPS / Main.FPS;
         private static const MAX_SPEED:Number = 300 / Main.FPS;
 
-        private static const WIDTH:int = 15;
+        public static const WIDTH:int = 15;
         private static const HEIGHT:int = 15;
 
         private static const ANIMATIONS:Vector.<String> = Vector.<String>([
