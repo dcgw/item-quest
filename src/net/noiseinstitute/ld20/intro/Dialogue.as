@@ -1,14 +1,29 @@
 package net.noiseinstitute.ld20.intro {
     import net.flashpunk.Entity;
     import net.flashpunk.graphics.Text;
+    import net.noiseinstitute.ld20.Main;
 
     public class Dialogue extends Entity {
         [Embed(source="celtic-bit-thin.ttf", embedAsCFF="false", fontFamily="CelticBitThin")]
         private static const CelticBitThin:Class;
 
-        private var _text:Text;
+        private static const Y:Number = Ground.START_BOTTOM + MARGIN;
+        private static const MARGIN:Number = 8;
+        private static const WIDTH:Number = Main.WIDTH - MARGIN - MARGIN;
+        private static const HEIGHT:Number = Main.HEIGHT;
 
+        private static const APPEND_INTERVAL:Number = 1/30 * Main.FPS;
+
+        private var _text:Text;
         private var _lines:Vector.<String>;
+
+        private var _frame:int = 0;
+        private var _lastAppendFrame:int = 0;
+
+        private var _lastBreakPoint:int = 0;
+
+        private var _line:int = 1;
+        private var _letter:int = 0;
 
         public function Dialogue () {
             _lines = Vector.<String>([
@@ -37,19 +52,24 @@ package net.noiseinstitute.ld20.intro {
                                 "ensorcelled", "expedient", "spellbound", "thaumaturgic", "extraordinary",
                                 "preposterous", "wonderful", "Tesco Value", "advantageous", "commodious",
                                 "delicious", "imitation", "pragmatic", "practical", "salubrious", "practicable",
-                                "utile", "propitious", "three-dimensional"])) +
+                                "utile", "propitious", "three-dimensional", "assorted"])) +
                         " " +
                         SelectWord(Vector.<String>(["items", "things", "objects", "gadgets", "commodities",
-                                "bits and bobs", "contrivances", "goods", "artifacts", "relics"])) +
-                        " I have " +
+                                "bits and bobs", "contrivances", "goods", "artifacts", "relics", "doodads",
+                                "cadigans", "widgets", "whatsits", "utensils", "thingums", "contraptions"])) +
+                        " that I have " +
                         SelectWord(Vector.<String>(["procured", "stolen", "purchased", "acquired", "obtained",
                                 "collected", "appropriated", "found", "constructed", "secured", "gathered"])) +
                         " to " +
                         SelectWord(Vector.<String>(["assist", "help", "aid", "abet", "support", "enrich",
-                                "embiggen", "empower"]))
+                                "embiggen", "empower"])) +
+                        " you."
             ]);
 
-            _text = new Text(_lines[1]);
+            x = MARGIN;
+            y = Y;
+
+            _text = new Text("", 0, 0, WIDTH, HEIGHT);
             _text.font = "CelticBitThin";
             _text.size = 8;
             _text.color = 0xffffff;
@@ -61,6 +81,28 @@ package net.noiseinstitute.ld20.intro {
 
         private function SelectWord (words:Vector.<String>):String {
             return words[Math.floor(Math.random() * words.length)];
+        }
+
+        public override function update():void {
+            ++_frame;
+            while (_frame - APPEND_INTERVAL > _lastAppendFrame) {
+                if (_line < _lines.length) {
+                    if (_letter < _lines[_line].length) {
+                        var ch:String = _lines[_line].charAt(_letter);
+                        _text.text += ch;
+                        if (_text.width > WIDTH) {
+                            _text.text = _text.text.substr(0, _lastBreakPoint) + "\n" +
+                                    _text.text.substr(_lastBreakPoint + 1);
+                        }
+                        if (ch == " " || ch == "-") {
+                            _lastBreakPoint = _letter;
+                        }
+                        _letter++;
+                    }
+                }
+                _lastAppendFrame += APPEND_INTERVAL;
+            }
+            super.update();
         }
     }
 }

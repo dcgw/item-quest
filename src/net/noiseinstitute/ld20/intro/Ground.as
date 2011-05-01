@@ -7,13 +7,14 @@ package net.noiseinstitute.ld20.intro {
         [Embed(source="../game/Ground.png")]
         private static const GroundImage:Class;
 
-        private static const HEIGHT:Number = 32;
+        public static const HEIGHT:Number = 32;
+        public static const START_BOTTOM:Number = Math.ceil(Main.HEIGHT/2) - 1 + HEIGHT;
 
         public function Ground () {
             graphic = new Backdrop(GroundImage, true, false);
 
             x = IntroWorld.SCROLL_BACK;
-            y = Math.ceil(Main.HEIGHT / 2) - 1;
+            y = START_BOTTOM - HEIGHT;
         }
     }
 }
