@@ -12,7 +12,7 @@ package net.noiseinstitute.ld20.game {
         private static const DECELERATION:Number = 1080 / Main.FPS / Main.FPS;
         private static const MAX_SPEED:Number = 360 / Main.FPS;
 
-        private static const WIDTH:int = 15;
+        public static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
 
         private static const FRAME_RATE:Number = 15 / Main.FPS;
@@ -40,7 +40,7 @@ package net.noiseinstitute.ld20.game {
 
             mask = new Hitbox(WIDTH, HEIGHT-1, -Math.ceil(WIDTH/2), -HEIGHT);
 
-            x = Main.WIDTH/2;
+            x = GameWorld.WIDTH/2;
             y = Main.HEIGHT - 31;
 
             _bobPosition = Math.PI + Math.PI;
@@ -52,11 +52,11 @@ package net.noiseinstitute.ld20.game {
                 return;
             }
 
-            var left:Boolean = Input.check(Input.keys("left"));
-            var right:Boolean = Input.check(Input.keys("right"));
-            if (right && !left) {
+            var movingLeft:Boolean = Input.check(Input.keys("left"));
+            var movingRight:Boolean = Input.check(Input.keys("right"));
+            if (movingRight && !movingLeft) {
                 _vx += ACCELERATION;
-            } else if (left && !right) {
+            } else if (movingLeft && !movingRight) {
                 _vx -= ACCELERATION;
             } else if (_vx > 0) {
                 _vx -= DECELERATION;
@@ -80,6 +80,20 @@ package net.noiseinstitute.ld20.game {
             _bobPosition = Math.PI + Math.PI + _frame * BOB_INCREMENT;
 
             super.update();
+
+            if (left < 0) {
+                x = x - left;
+                if (_vx < 0) {
+                    _vx = -_vx;
+                }
+            }
+
+            if (right > GameWorld.WIDTH) {
+                x = GameWorld.WIDTH - (right - x);
+                if (_vx > 0) {
+                    _vx = -_vx;
+                }
+            }
         }
 
         public override function get resting():Boolean {

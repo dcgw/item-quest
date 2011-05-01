@@ -19,7 +19,7 @@ package net.noiseinstitute.ld20.game {
             ++_tick;
 
             if (_tick%INTERVAL == 0) {
-                world.add(new Thing(Math.random()*VARIANCE + (Main.WIDTH-VARIANCE)/2, -BUILDUP, _particles));
+                world.add(new Thing(Math.random()*VARIANCE + (GameWorld.WIDTH-VARIANCE)/2, -BUILDUP, _particles));
             }
         }
     }
