@@ -15,7 +15,8 @@ package net.noiseinstitute.ld20.game {
         private static const WIDTH:int = 15;
         private static const HEIGHT:int = 25;
 
-        private static const BOB_INCREMENT:Number = 15/4 * (Math.PI*2) / Main.FPS;
+        private static const FRAME_RATE:Number = 15 / Main.FPS;
+        private static const BOB_INCREMENT:Number = FRAME_RATE/4 * (Math.PI*2);
 
         private var _spritemap:Spritemap;
 
@@ -26,7 +27,7 @@ package net.noiseinstitute.ld20.game {
             height = HEIGHT;
 
             _spritemap = new Spritemap(PlayerSpritemap, WIDTH, HEIGHT);
-            _spritemap.add("walk-right", [0, 1, 2, 3], 15 / Main.FPS);
+            _spritemap.add("walk-right", [0, 1, 2, 3], FRAME_RATE);
 
             _spritemap.x = -Math.ceil(WIDTH/2);
             _spritemap.y = -HEIGHT;

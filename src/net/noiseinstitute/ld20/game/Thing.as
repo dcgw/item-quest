@@ -30,6 +30,8 @@ package net.noiseinstitute.ld20.game {
 
         private static const HITBOX_WIDTH:int = WIDTH - 2;
 
+        private const FIRE_PIECES:int = 8;
+
         private var _particles:Particles;
         private var _thingUponWhichIRest:StackThing;
 
@@ -61,7 +63,13 @@ package net.noiseinstitute.ld20.game {
             mask = new Hitbox(HITBOX_WIDTH, HEIGHT, -Math.ceil(HITBOX_WIDTH/2), -HEIGHT);
         }
 
+
         public override function update():void {
+            if (y > Ground.TOP) {
+                asplode();
+                return;
+            }
+
             var safeSpeed:Number = SAFE_SPEED - _stackLayer*SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*SAFE_SPEED;
             var fractionAboveSafeSpeed:Number = FRACTION_ABOVE_SAFE_SPEED -
                     _stackLayer*FRACTION_ABOVE_SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*FRACTION_ABOVE_SAFE_SPEED;
@@ -144,6 +152,17 @@ package net.noiseinstitute.ld20.game {
             }
 
             super.update();
+        }
+
+        private function asplode ():void {
+            for (var i:int=0; i<FIRE_PIECES; ++i) {
+                var angle:Number = (30 + Math.random()*120) * Math.PI/180;
+                var vx:Number = Math.cos(angle);
+                var vy:Number = -Math.sin(angle);
+                world.add(new Fire(x, vx, vy));
+            }
+
+            world.remove(this);
         }
     }
 }
