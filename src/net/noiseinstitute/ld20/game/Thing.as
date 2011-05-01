@@ -26,6 +26,8 @@ package net.noiseinstitute.ld20.game {
 
         private static const BOB_POSITION_OFFSET:Number = Math.PI/4;
 
+        private static const HITBOX_WIDTH:int = WIDTH - 2;
+
         private var _thingUponWhichIRest:Collidable;
 
         public override function get resting():Boolean {
@@ -40,6 +42,10 @@ package net.noiseinstitute.ld20.game {
             }
 
             spritemap.play(ANIMATIONS[Math.floor(Math.random() * ANIMATIONS.length)]);
+
+            spritemap.x = -Math.ceil(WIDTH/2);
+            spritemap.y = -HEIGHT;
+
             graphic = spritemap;
 
             x = targetX;
@@ -47,7 +53,7 @@ package net.noiseinstitute.ld20.game {
             width = WIDTH;
             height = HEIGHT;
 
-            mask = new Hitbox(WIDTH - 2, HEIGHT, -Math.ceil(WIDTH/2) + 1, -HEIGHT);
+            mask = new Hitbox(HITBOX_WIDTH, HEIGHT, -Math.ceil(HITBOX_WIDTH/2), -HEIGHT);
         }
 
         public override function update():void {
@@ -97,6 +103,7 @@ package net.noiseinstitute.ld20.game {
                             _thingUponWhichIRest = collider;
                             y = collider.y - collider.height;
                             _vy = 0;
+                            break;
                         } else {
                             if (x < collider.x) {
                                 x = collider.left - (right - x);
@@ -116,7 +123,6 @@ package net.noiseinstitute.ld20.game {
                                 }
                             }
                         }
-                        break;
                     }
                 }
             }
