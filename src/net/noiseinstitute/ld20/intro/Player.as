@@ -12,7 +12,7 @@ package net.noiseinstitute.ld20.intro {
 
         private static const SPEED:Number = 360/Main.FPS;
         private static const DECELERATION:Number = 1080 / Main.FPS / Main.FPS;
-        private static const STOP_X:Number = Main.WIDTH - WIDTH - 64 - IntroWorld.SCROLL_BACK;
+        private static const STOP_X:Number = Main.WIDTH - WIDTH - 64 + IntroWorld.SCROLL_FORWARD;
 
         private var _vx:Number;
 

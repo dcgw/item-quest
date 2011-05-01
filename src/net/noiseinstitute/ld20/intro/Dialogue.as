@@ -12,6 +12,8 @@ package net.noiseinstitute.ld20.intro {
         private static const WIDTH:Number = Main.WIDTH - MARGIN - MARGIN;
         private static const HEIGHT:Number = Main.HEIGHT;
 
+        private static const START_FRAME:int = 1 * Main.FPS;
+
         private static const APPEND_INTERVAL:Number = 1/30 * Main.FPS;
         private static const REMAIN_TIME_PER_LETTER:Number = 1/20 * Main.FPS;
 
@@ -21,7 +23,7 @@ package net.noiseinstitute.ld20.intro {
 
         private var _lines:Vector.<String>;
         private var _frame:int = 0;
-        private var _lastAppendFrame:int = 0;
+        private var _lastAppendFrame:int = START_FRAME;
 
         private var _completeLineFrame:int = 0;
 

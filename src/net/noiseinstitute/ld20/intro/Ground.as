@@ -13,7 +13,6 @@ package net.noiseinstitute.ld20.intro {
         public function Ground () {
             graphic = new Backdrop(GroundImage, true, false);
 
-            x = IntroWorld.SCROLL_BACK;
             y = START_BOTTOM - HEIGHT;
         }
     }

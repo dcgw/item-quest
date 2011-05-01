@@ -15,7 +15,7 @@ package net.noiseinstitute.ld20.intro {
             graphic.x = -Math.ceil(WIDTH/2);
             graphic.y = -HEIGHT;
 
-            x = WIDTH - IntroWorld.SCROLL_BACK;
+            x = IntroWorld.SCROLL_FORWARD + WIDTH;
             y = Math.ceil(Main.HEIGHT / 2);
         }
     }
