@@ -36,7 +36,7 @@ package net.noiseinstitute.ld20.game {
             graphic = spritemap;
 
             type = TYPE;
-            setHitbox(1, 1, spritemap.x, spritemap.y);
+            setHitbox(1, 1);
 
             spritemap.play("fire");
         }
