@@ -40,7 +40,7 @@ package net.noiseinstitute.ld20.game {
             x = Main.WIDTH/2;
             y = Main.HEIGHT - 31;
 
-            _bobPosition = Math.PI;
+            _bobPosition = Math.PI + Math.PI;
         }
 
         public override function update():void {
@@ -69,7 +69,7 @@ package net.noiseinstitute.ld20.game {
             }
 
             ++_frame;
-            _bobPosition = _frame * BOB_INCREMENT;
+            _bobPosition = Math.PI + Math.PI + _frame * BOB_INCREMENT;
 
             super.update();
         }
