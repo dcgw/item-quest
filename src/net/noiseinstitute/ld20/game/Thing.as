@@ -15,7 +15,7 @@ package net.noiseinstitute.ld20.game {
 
         private static const ANIMATIONS:Vector.<String> = Vector.<String>([
                 "grail", "dentures", "torch", "heart", "banana", "book",
-                "gauntlets", "diamond", "feline"
+                "gauntlets", "diamond", "feline", "tin", "sword"
         ]);
 
         private static const COLLISION_ALLOWANCE:Number = 360 / Main.FPS;
