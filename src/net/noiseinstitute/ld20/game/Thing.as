@@ -28,13 +28,16 @@ package net.noiseinstitute.ld20.game {
 
         private static const HITBOX_WIDTH:int = WIDTH - 2;
 
+        private var _particles:Particles;
         private var _thingUponWhichIRest:Collidable;
 
         public override function get resting():Boolean {
             return _thingUponWhichIRest != null;
         }
 
-        public function Thing (targetX:Number, targetY:Number) {
+        public function Thing (targetX:Number, targetY:Number, particles:Particles) {
+            _particles = particles;
+
             var spritemap:Spritemap = new Spritemap(ThingSpritemap, WIDTH, HEIGHT);
 
             for (var i:uint=0; i<ANIMATIONS.length; ++i) {
@@ -103,6 +106,7 @@ package net.noiseinstitute.ld20.game {
                             _thingUponWhichIRest = collider;
                             y = collider.y - collider.height;
                             _vy = 0;
+                            _particles.stars(x, y);
                             break;
                         } else {
                             if (x < collider.x) {
