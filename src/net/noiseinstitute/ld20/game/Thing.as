@@ -3,7 +3,7 @@ package net.noiseinstitute.ld20.game {
     import net.flashpunk.masks.Hitbox;
     import net.noiseinstitute.ld20.Main;
 
-    public class Thing extends Collidable {
+    public class Thing extends StackThing {
         [Embed(source="Thing.png")]
         private static const ThingSpritemap:Class;
 
@@ -23,13 +23,15 @@ package net.noiseinstitute.ld20.game {
 
         private static const SAFE_SPEED:Number = 75 / Main.FPS;
         private static const FRACTION_ABOVE_SAFE_SPEED:Number = 0.7;
+        private static const SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER:Number = 0.1;
+        private static const FRACTION_ABOVE_SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER:Number = 0.1;
 
         private static const BOB_POSITION_OFFSET:Number = Math.PI/4;
 
         private static const HITBOX_WIDTH:int = WIDTH - 2;
 
         private var _particles:Particles;
-        private var _thingUponWhichIRest:Collidable;
+        private var _thingUponWhichIRest:StackThing;
 
         public override function get resting():Boolean {
             return _thingUponWhichIRest != null;
@@ -60,28 +62,35 @@ package net.noiseinstitute.ld20.game {
         }
 
         public override function update():void {
+            var safeSpeed:Number = SAFE_SPEED - _stackLayer*SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*SAFE_SPEED;
+            var fractionAboveSafeSpeed:Number = FRACTION_ABOVE_SAFE_SPEED -
+                    _stackLayer*FRACTION_ABOVE_SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*FRACTION_ABOVE_SAFE_SPEED;
+
             if (_thingUponWhichIRest != null) {
                 if (!_thingUponWhichIRest.resting) {
                     _thingUponWhichIRest = null;
+                    _stackLayer = 0;
                 } else if (right < _thingUponWhichIRest.left) {
                     if (_thingUponWhichIRest.vx < 0) {
                         _vx += _thingUponWhichIRest.vx;
                     }
-                    _thingUponWhichIRest = null
+                    _thingUponWhichIRest = null;
+                    _stackLayer = 0;
                 } else if (left > _thingUponWhichIRest.right) {
                     if (_thingUponWhichIRest.vx > 0) {
                         _vx += _thingUponWhichIRest.vx;
                     }
                     _thingUponWhichIRest = null;
-                } else if (Math.abs(_thingUponWhichIRest.vx) <= SAFE_SPEED) {
-                    if (Math.abs(_vx) <= SAFE_SPEED) {
+                    _stackLayer = 0;
+                } else if (Math.abs(_thingUponWhichIRest.vx) <= safeSpeed) {
+                    if (Math.abs(_vx) <= safeSpeed) {
                         _vx = _thingUponWhichIRest.vx;
                     } else {
-                        _vx = _thingUponWhichIRest.vx * FRACTION_ABOVE_SAFE_SPEED + _vx * (1-FRACTION_ABOVE_SAFE_SPEED);
+                        _vx = _thingUponWhichIRest.vx * fractionAboveSafeSpeed + _vx * (1-fractionAboveSafeSpeed);
                     }
                 } else {
                     var dir:Number = _thingUponWhichIRest.vx / Math.abs(_thingUponWhichIRest.vx);
-                    _vx = dir * SAFE_SPEED + FRACTION_ABOVE_SAFE_SPEED * (_thingUponWhichIRest.vx - (dir * SAFE_SPEED));
+                    _vx = dir * safeSpeed + fractionAboveSafeSpeed * (_thingUponWhichIRest.vx - (dir * safeSpeed));
                 }
             }
 
@@ -99,11 +108,12 @@ package net.noiseinstitute.ld20.game {
                 }
 
                 var colliders:Array = [];
-                collideInto(Collidable.TYPE, x, y, colliders);
-                for each (var collider:Collidable in colliders) {
+                collideInto(StackThing.TYPE, x, y, colliders);
+                for each (var collider:StackThing in colliders) {
                     if (collider != null && collider.resting) {
                         if (bottom < collider.top + COLLISION_ALLOWANCE) {
                             _thingUponWhichIRest = collider;
+                            _stackLayer = collider.stackLayer + 1;
                             y = collider.y - collider.height;
                             _vy = 0;
                             _particles.stars(x, y);

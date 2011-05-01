@@ -4,7 +4,7 @@ package net.noiseinstitute.ld20.game {
     import net.flashpunk.masks.Hitbox;
     import net.flashpunk.utils.Input;
 
-    public class Player extends Collidable {
+    public class Player extends StackThing {
         [Embed(source="Player.png")]
         private static const PlayerSpritemap:Class;
 

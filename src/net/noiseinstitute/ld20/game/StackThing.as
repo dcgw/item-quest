@@ -1,14 +1,15 @@
 package net.noiseinstitute.ld20.game {
     import net.flashpunk.Entity;
 
-    public class Collidable extends net.flashpunk.Entity {
-        public static const TYPE:String = "collidable";
+    public class StackThing extends Entity {
+        public static const TYPE:String = "StackThing";
 
         protected var _vx:Number = 0;
         protected var _vy:Number = 0;
+        protected var _stackLayer:int = 0;
         protected var _bobPosition:Number = 0;
 
-        public function Collidable() {
+        public function StackThing() {
             type = TYPE;
         }
 
@@ -18,6 +19,10 @@ package net.noiseinstitute.ld20.game {
 
         public function get vy():Number {
             return _vy;
+        }
+
+        public function get stackLayer():int {
+            return _stackLayer;
         }
 
         public function get bobPosition():Number {
