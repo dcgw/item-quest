@@ -11,6 +11,8 @@ package net.noiseinstitute.ld20.game {
         private static const INTERVAL_CHANGE_COEFFICIENT:Number = 0.97;
         private static const MIN_INTERVAL:Number = 1/60 * Main.FPS;
 
+        private static const FIRE_SPREAD_INCREMENT:Number = 0.02/Main.FPS;
+
         private var _variance:Number = 60;
         private var _interval:Number = 2 * Main.FPS;
 
@@ -18,6 +20,8 @@ package net.noiseinstitute.ld20.game {
 
         private var _particles:Particles;
         private var _score:Score;
+
+        private var _fireSpread:Number = 0.5;
 
         public function OldMan(particles:Particles, score:Score) {
             _particles = particles;
@@ -31,7 +35,7 @@ package net.noiseinstitute.ld20.game {
                 _ticks -= _interval;
                 var x:Number = Math.random()*_variance + (GameWorld.WIDTH-_variance)/2;
                 var y:int = -BUILDUP;
-                world.add(new Thing(x, y, _particles, _score));
+                world.add(new Thing(x, y, _particles, _score, _fireSpread));
 
                 _interval *= INTERVAL_CHANGE_COEFFICIENT;
                 if (_interval < MIN_INTERVAL) {
@@ -43,6 +47,10 @@ package net.noiseinstitute.ld20.game {
             if (_variance > MAX_VARIANCE) {
                 _variance = MAX_VARIANCE;
             }
+
+            _fireSpread += FIRE_SPREAD_INCREMENT;
+
+            super.update();
         }
     }
 }

@@ -38,15 +38,18 @@ package net.noiseinstitute.ld20.game {
 
         private var _score:Score;
 
+        private var _fireSpread:Number;
+
         private var _thingUponWhichIRest:StackThing;
 
         public override function get resting():Boolean {
             return _thingUponWhichIRest != null;
         }
 
-        public function Thing (targetX:Number, targetY:Number, particles:Particles, score:Score) {
+        public function Thing (targetX:Number, targetY:Number, particles:Particles, score:Score, fireSpread:Number) {
             _particles = particles;
             _score = score;
+            _fireSpread = fireSpread;
 
             var spritemap:Spritemap = new Spritemap(ThingSpritemap, WIDTH, HEIGHT);
 
@@ -179,7 +182,7 @@ package net.noiseinstitute.ld20.game {
         private function asplode ():void {
             for (var i:int=0; i<FIRE_PIECES; ++i) {
                 var angle:Number = (30 + Math.random()*120) * Math.PI/180;
-                var vx:Number = Math.cos(angle);
+                var vx:Number = Math.cos(angle) * _fireSpread;
                 var vy:Number = -Math.sin(angle);
                 world.add(new Fire(x, vx, vy));
             }
