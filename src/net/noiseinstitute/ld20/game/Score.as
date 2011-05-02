@@ -27,7 +27,9 @@ package net.noiseinstitute.ld20.game {
         }
 
         public function addPoints(points:Number):void {
-            _score += points;
+            if (points >= 0) {
+                _score += points;
+            }
         }
 
         public override function update():void {
