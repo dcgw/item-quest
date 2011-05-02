@@ -2,6 +2,7 @@ package net.noiseinstitute.ld20.intro {
     import net.flashpunk.FP;
     import net.flashpunk.World;
     import net.flashpunk.utils.Input;
+    import net.noiseinstitute.ld20.FadeScreen;
     import net.noiseinstitute.ld20.Main;
     import net.noiseinstitute.ld20.game.GameWorld;
 
@@ -10,6 +11,8 @@ package net.noiseinstitute.ld20.intro {
         public static const SCROLL_COEFFICIENT:Number = 2.1/Main.FPS;
 
         private var _action:uint = 0;
+
+        private var _ending:Boolean = false;
 
         public function IntroWorld () {
             FP.screen.color = 0xc62ee1;
@@ -34,7 +37,14 @@ package net.noiseinstitute.ld20.intro {
         }
 
         private function endIntro():void {
-            FP.world = new GameWorld;
+            if (!_ending) {
+                _ending = true;
+                var fader:FadeScreen = new FadeScreen();
+                add(fader);
+                fader.fadeOut(0xffffff, 1/5*Main.FPS, function():void {
+                    FP.world = new GameWorld;
+                });
+            }
         }
     }
 }
