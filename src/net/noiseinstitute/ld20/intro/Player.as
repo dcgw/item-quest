@@ -17,7 +17,7 @@ package net.noiseinstitute.ld20.intro {
         private var _vx:Number;
 
         public function Player () {
-            var spritemap = new Spritemap(PlayerSpritemap, WIDTH, HEIGHT);
+            var spritemap:Spritemap = new Spritemap(PlayerSpritemap, WIDTH, HEIGHT);
             spritemap.add("walk-right", [0, 1, 2, 3], 15 / Main.FPS);
 
             spritemap.x = -Math.ceil(WIDTH/2);

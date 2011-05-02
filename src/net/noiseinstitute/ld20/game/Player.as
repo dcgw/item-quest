@@ -106,11 +106,13 @@ package net.noiseinstitute.ld20.game {
         }
 
         private function die ():void {
-            _alive = false;
-            world.remove(this);
+            if (_alive) {
+                _alive = false;
+                world.remove(this);
 
-            if (onDeath) {
-                onDeath();
+                if (onDeath) {
+                    onDeath();
+                }
             }
         }
     }

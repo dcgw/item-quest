@@ -17,7 +17,7 @@ package net.noiseinstitute.ld20 {
                 image.alpha = tick/time;
                 if (tick >= time) {
                     _fadeFunction = null;
-                    if (callback) {
+                    if (callback != null) {
                         callback();
                     }
                 }
@@ -38,7 +38,7 @@ package net.noiseinstitute.ld20 {
                 if (tick >= time) {
                     graphic = null;
                     _fadeFunction = null;
-                    if (callback) {
+                    if (callback != null) {
                         callback();
                     }
                 }
@@ -47,7 +47,7 @@ package net.noiseinstitute.ld20 {
         }
 
         public override function update():void {
-            if (_fadeFunction) {
+            if (_fadeFunction != null) {
                 _fadeFunction();
             }
 
