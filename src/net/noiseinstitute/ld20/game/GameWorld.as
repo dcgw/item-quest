@@ -3,7 +3,7 @@ package net.noiseinstitute.ld20.game {
     import net.flashpunk.World;
     import net.noiseinstitute.ld20.FadeScreen;
     import net.noiseinstitute.ld20.Main;
-    import net.noiseinstitute.ld20.intro.IntroWorld;
+    import net.noiseinstitute.ld20.title.TitleWorld;
 
     public class GameWorld extends World {
         public static const WIDTH:Number = 960;
@@ -33,8 +33,8 @@ package net.noiseinstitute.ld20.game {
             add(_player);
 
             _player.onDeath = function():void {
-                _fader.fadeOut(0x000000, 4 * Main.FPS, function():void {
-                    FP.world = new IntroWorld;
+                _fader.fadeOut(0x000000, 2 * Main.FPS, function():void {
+                    FP.world = new TitleWorld(score.score);
                 });
             };
 
