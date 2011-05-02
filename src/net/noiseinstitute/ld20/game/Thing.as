@@ -140,7 +140,7 @@ package net.noiseinstitute.ld20.game {
                         if (bottom < collider.top + COLLISION_ALLOWANCE) {
                             _thingUponWhichIRest = collider;
                             _stackLayer = collider.stackLayer + 1;
-                            y = collider.y - collider.height;
+                            y = collider.top;
                             _vy = 0;
                             _particles.stars(x, y);
                             break;
