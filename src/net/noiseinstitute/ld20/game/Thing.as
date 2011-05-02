@@ -18,6 +18,8 @@ package net.noiseinstitute.ld20.game {
                 "gauntlets", "diamond", "feline", "tin", "sword", "stone"
         ]);
 
+        private static const SCORE_PER_FRAME_PER_LAYER:Number = 100/Main.FPS;
+
         private static const COLLISION_ALLOWANCE:Number = 360 / Main.FPS;
         private static const KICK_UP_IN_THE_AIR_COEFFICIENT:Number = 0.8;
 
@@ -33,14 +35,18 @@ package net.noiseinstitute.ld20.game {
         private const FIRE_PIECES:int = 8;
 
         private var _particles:Particles;
+
+        private var _score:Score;
+
         private var _thingUponWhichIRest:StackThing;
 
         public override function get resting():Boolean {
             return _thingUponWhichIRest != null;
         }
 
-        public function Thing (targetX:Number, targetY:Number, particles:Particles) {
+        public function Thing (targetX:Number, targetY:Number, particles:Particles, score:Score) {
             _particles = particles;
+            _score = score;
 
             var spritemap:Spritemap = new Spritemap(ThingSpritemap, WIDTH, HEIGHT);
 
@@ -109,6 +115,14 @@ package net.noiseinstitute.ld20.game {
             if (_thingUponWhichIRest != null) {
                 _bobPosition = _thingUponWhichIRest.bobPosition + BOB_POSITION_OFFSET;
                 graphic.y = -HEIGHT + Math.sin(_bobPosition) * 1.2;
+
+                var xDelta:Number = _thingUponWhichIRest.x - x;
+                var xDeltaFraction:Number = xDelta/(WIDTH/2);
+                if (xDeltaFraction < 0) {
+                    xDeltaFraction = 0;
+                }
+
+                _score.addPoints(SCORE_PER_FRAME_PER_LAYER * _stackLayer * (1-xDeltaFraction));
             } else {
                 graphic.y = -HEIGHT;
             }
@@ -135,7 +149,7 @@ package net.noiseinstitute.ld20.game {
                                 x = collider.left - (right - x);
                                 if (collider.vx < 0) {
                                     _vx += collider.vx;
-                                    if (collider instanceof Player) {
+                                    if (collider is Player) {
                                         _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_COEFFICIENT;
                                     }
                                 }
@@ -143,7 +157,7 @@ package net.noiseinstitute.ld20.game {
                                 x = collider.right + (x - left);
                                 if (collider.vx > 0) {
                                     _vx += collider.vx;
-                                    if (collider instanceof Player) {
+                                    if (collider is Player) {
                                         _vy -= Math.abs(collider.vx) * KICK_UP_IN_THE_AIR_COEFFICIENT;
                                     }
                                 }

@@ -11,11 +11,18 @@ package net.noiseinstitute.ld20 {
         public static const HEIGHT:uint = 320;
         public static const FPS:uint = 120;
 
+        public static const CELTIC_BIT_THIN:String = "CelticBitThin";
+
+        //noinspection JSUnusedLocalSymbols
+        [Embed(source="celtic-bit-thin.ttf", embedAsCFF="false", fontFamily="CelticBitThin")]
+        private static const CelticBitThin:Class;
+
         public function Main () {
             super(WIDTH, HEIGHT, FPS, true);
 
             Input.define("left", Key.LEFT);
             Input.define("right", Key.RIGHT);
+            Input.define("action", Key.SPACE, Key.Z, Key.X, Key.C, Key.ENTER, Key.SHIFT, Key.CONTROL);
 
             FP.screen.scale = 2;
             FP.world = new IntroWorld();

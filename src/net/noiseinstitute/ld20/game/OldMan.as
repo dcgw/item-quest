@@ -17,9 +17,11 @@ package net.noiseinstitute.ld20.game {
         private var _ticks:uint = 0;
 
         private var _particles:Particles;
+        private var _score:Score;
 
-        public function OldMan(particles:Particles) {
+        public function OldMan(particles:Particles, score:Score) {
             _particles = particles;
+            _score = score;
         }
 
         override public function update():void {
@@ -27,7 +29,9 @@ package net.noiseinstitute.ld20.game {
 
             while (_ticks >= _interval) {
                 _ticks -= _interval;
-                world.add(new Thing(Math.random()*_variance + (GameWorld.WIDTH-_variance)/2, -BUILDUP, _particles));
+                var x:Number = Math.random()*_variance + (GameWorld.WIDTH-_variance)/2;
+                var y:int = -BUILDUP;
+                world.add(new Thing(x, y, _particles, _score));
 
                 _interval *= INTERVAL_CHANGE_COEFFICIENT;
                 if (_interval < MIN_INTERVAL) {

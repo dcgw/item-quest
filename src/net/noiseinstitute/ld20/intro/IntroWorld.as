@@ -1,6 +1,7 @@
 package net.noiseinstitute.ld20.intro {
     import net.flashpunk.FP;
     import net.flashpunk.World;
+    import net.flashpunk.utils.Input;
     import net.noiseinstitute.ld20.Main;
     import net.noiseinstitute.ld20.game.GameWorld;
 
@@ -17,10 +18,14 @@ package net.noiseinstitute.ld20.intro {
             add(new Player);
             add(new OldMan);
             add(new ArrowOverlay);
-            add(new Dialogue(onDialogueComplete));
+            add(new Dialogue(endIntro));
         }
 
         public override function update():void {
+            if (Input.pressed("action")) {
+                endIntro();
+            }
+
             if (FP.camera.x < SCROLL_FORWARD) {
                 FP.camera.x += (SCROLL_FORWARD - FP.camera.x) * SCROLL_COEFFICIENT;
             }
@@ -28,7 +33,7 @@ package net.noiseinstitute.ld20.intro {
             super.update();
         }
 
-        private function onDialogueComplete():void {
+        private function endIntro():void {
             FP.world = new GameWorld;
         }
     }

@@ -4,15 +4,12 @@ package net.noiseinstitute.ld20.intro {
     import net.noiseinstitute.ld20.Main;
 
     public class Dialogue extends Entity {
-        [Embed(source="celtic-bit-thin.ttf", embedAsCFF="false", fontFamily="CelticBitThin")]
-        private static const CelticBitThin:Class;
-
         private static const Y:Number = Ground.START_BOTTOM + MARGIN;
         private static const MARGIN:Number = 8;
         private static const WIDTH:Number = Main.WIDTH - MARGIN - MARGIN;
         private static const HEIGHT:Number = Main.HEIGHT;
 
-        private static const START_FRAME:int = 1 * Main.FPS;
+        private static const START_FRAME:int = Main.FPS;
 
         private static const APPEND_INTERVAL:Number = 1/30 * Main.FPS;
         private static const REMAIN_TIME_PER_LETTER:Number = 1/20 * Main.FPS;
@@ -78,7 +75,7 @@ package net.noiseinstitute.ld20.intro {
             y = Y;
 
             _text = new Text("", 0, 0, WIDTH, HEIGHT);
-            _text.font = "CelticBitThin";
+            _text.font = Main.CELTIC_BIT_THIN;
             _text.size = 8;
             _text.color = 0xffffff;
             _text.scrollX = 0;

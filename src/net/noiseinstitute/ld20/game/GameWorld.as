@@ -11,7 +11,11 @@ package net.noiseinstitute.ld20.game {
         public function GameWorld () {
             FP.screen.color = 0xc62ee1;
 
-            var particles = new Particles;
+            var score:Score = new Score;
+            score.layer = 1;
+            add(score);
+
+            var particles:Particles = new Particles;
             add(particles);
 
             add(new Ground);
@@ -19,7 +23,7 @@ package net.noiseinstitute.ld20.game {
             _player = new Player;
             add(_player);
 
-            add(new OldMan(particles));
+            add(new OldMan(particles, score));
         }
 
         public override function update():void {

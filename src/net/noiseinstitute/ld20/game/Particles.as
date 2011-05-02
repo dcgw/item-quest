@@ -29,13 +29,14 @@ package net.noiseinstitute.ld20.game {
             _emitter.x = -Math.ceil(WIDTH/2);
             _emitter.y = -Math.ceil(HEIGHT/2);
 
-            for(var i:int=0; i<STAR_TYPES.length; ++i) {
+            var i:int;
+            for(i=0; i<STAR_TYPES.length; ++i) {
                 _emitter.newType(STAR_TYPES[i], [2 + 3*i]);
                 _emitter.setMotion(STAR_TYPES[i], 30, 64, 1/3*Main.FPS, 120);
                 _emitter.setAlpha(STAR_TYPES[i], 1, 0, function(a:Number):Number { return a*a; });
             }
 
-            for (var i:int=0; i<SPARKLE_TYPES.length; ++i) {
+            for (i=0; i<SPARKLE_TYPES.length; ++i) {
                 _emitter.newType(SPARKLE_TYPES[i], [i, i+3, i+6, i+9, i+12, i+15, i+18, i+21, i+24]);
                 _emitter.setMotion(SPARKLE_TYPES[i], 30, 16, 1/3*Main.FPS, 120);
             }
