@@ -1,9 +1,9 @@
 package net.noiseinstitute.ld20.game {
     import net.flashpunk.FP;
     import net.flashpunk.World;
-    import net.flashpunk.tweens.sound.Fader;
     import net.noiseinstitute.ld20.FadeScreen;
     import net.noiseinstitute.ld20.Main;
+    import net.noiseinstitute.ld20.intro.IntroWorld;
 
     public class GameWorld extends World {
         public static const WIDTH:Number = 960;
@@ -31,6 +31,12 @@ package net.noiseinstitute.ld20.game {
 
             _player = new Player;
             add(_player);
+
+            _player.onDeath = function():void {
+                _fader.fadeOut(0x000000, 4 * Main.FPS, function():void {
+                    FP.world = new IntroWorld;
+                });
+            };
 
             add(new OldMan(particles, score));
         }

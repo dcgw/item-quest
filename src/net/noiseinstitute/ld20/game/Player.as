@@ -24,6 +24,8 @@ package net.noiseinstitute.ld20.game {
 
         private var _alive:Boolean = true;
 
+        public var onDeath:Function;
+
         public function Player () {
             width = WIDTH;
             height = HEIGHT;
@@ -49,35 +51,9 @@ package net.noiseinstitute.ld20.game {
         public override function update():void {
             if (collide(Fire.TYPE, x, y)) {
                 die();
-                return;
+            } else {
+                doUpdate();
             }
-
-            var movingLeft:Boolean = Input.check(Input.keys("left"));
-            var movingRight:Boolean = Input.check(Input.keys("right"));
-            if (movingRight && !movingLeft) {
-                _vx += ACCELERATION;
-            } else if (movingLeft && !movingRight) {
-                _vx -= ACCELERATION;
-            } else if (_vx > 0) {
-                _vx -= DECELERATION;
-                if (_vx < 0) {
-                     _vx = 0;
-                }
-            } else if (_vx < 0) {
-                _vx += DECELERATION;
-                if (_vx > 0) {
-                    _vx = 0;
-                }
-            }
-
-            if (_vx > MAX_SPEED) {
-                _vx = MAX_SPEED;
-            } else if (_vx < -MAX_SPEED) {
-                _vx = -MAX_SPEED;
-            }
-
-            ++_frame;
-            _bobPosition = Math.PI + Math.PI + _frame * BOB_INCREMENT;
 
             super.update();
 
@@ -96,6 +72,35 @@ package net.noiseinstitute.ld20.game {
             }
         }
 
+        private function doUpdate ():void {
+            var movingLeft:Boolean = Input.check(Input.keys("left"));
+            var movingRight:Boolean = Input.check(Input.keys("right"));
+            if (movingRight && !movingLeft) {
+                _vx += ACCELERATION;
+            } else if (movingLeft && !movingRight) {
+                _vx -= ACCELERATION;
+            } else if (_vx > 0) {
+                _vx -= DECELERATION;
+                if (_vx < 0) {
+                    _vx = 0;
+                }
+            } else if (_vx < 0) {
+                _vx += DECELERATION;
+                if (_vx > 0) {
+                    _vx = 0;
+                }
+            }
+
+            if (_vx > MAX_SPEED) {
+                _vx = MAX_SPEED;
+            } else if (_vx < -MAX_SPEED) {
+                _vx = -MAX_SPEED;
+            }
+
+            ++_frame;
+            _bobPosition = Math.PI + Math.PI + _frame * BOB_INCREMENT;
+        }
+
         public override function get resting():Boolean {
             return _alive;
         }
@@ -103,6 +108,10 @@ package net.noiseinstitute.ld20.game {
         private function die ():void {
             _alive = false;
             world.remove(this);
+
+            if (onDeath) {
+                onDeath();
+            }
         }
     }
 }

@@ -77,6 +77,10 @@ package net.noiseinstitute.ld20.game {
             }
 
             var safeSpeed:Number = SAFE_SPEED - (_stackLayer-1)*SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*SAFE_SPEED;
+            if (safeSpeed < 0) {
+                safeSpeed = 0;
+            }
+
             var fractionAboveSafeSpeed:Number = FRACTION_ABOVE_SAFE_SPEED -
                     (_stackLayer-1)*FRACTION_ABOVE_SAFE_SPEED_REDUCTION_COEFFICIENT_PER_LAYER*FRACTION_ABOVE_SAFE_SPEED;
 
