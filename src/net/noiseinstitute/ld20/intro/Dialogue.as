@@ -96,7 +96,7 @@ package net.noiseinstitute.ld20.intro {
                     if (_letter < line.length) {
                         var ch:String = line.charAt(_letter);
                         _text.text += ch;
-                        if (_text.width > WIDTH) {
+                        if (_text.textWidth > WIDTH) {
                             _text.text = _text.text.substr(0, _lastBreakPoint) + "\n" +
                                     _text.text.substr(_lastBreakPoint + 1);
                         }
